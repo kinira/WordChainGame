@@ -10,6 +10,12 @@ namespace WordChain.Data
 {
     public class WordChainContext : DbContext
     {
+        public WordChainContext() : 
+                base("WordChain")
+        {
+
+        }
+
         public DbSet<User> Users { get; set; }
         public DbSet<Word> Words { get; set; }
         public DbSet<Topic> Topics { get; set; }

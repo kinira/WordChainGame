@@ -25,6 +25,12 @@ namespace WordChainGame
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.Routes.MapHttpRoute(
+              name: "User",
+              routeTemplate: "api/users/{id}",
+              defaults: new { controller = "user", id = RouteParameter.Optional }
+          );
         }
     }
 }

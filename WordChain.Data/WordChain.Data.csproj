@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccess\IUserDataManager.cs" />
+    <Compile Include="DataAccess\UserDataManager.cs" />
     <Compile Include="Migrations\201701292030258_CreateDB.cs" />
     <Compile Include="Migrations\201701292030258_CreateDB.Designer.cs">
       <DependentUpon>201701292030258_CreateDB.cs</DependentUpon>
@@ -71,6 +73,7 @@
       <DependentUpon>201701292030258_CreateDB.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
