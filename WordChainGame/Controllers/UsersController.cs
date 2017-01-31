@@ -1,17 +1,20 @@
-﻿using System.Net;
+﻿using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using WordChain.Data.DataAccess;
 using WordChain.Data.Models;
+using WordChainGame.Models;
 
 namespace WordChainGame.Controllers
 {
     public class UsersController : ApiController
     {
-        public UserDataManager userData = new UserDataManager();
+        public IUserDataManager userData = new UserDataManager();
 
         [HttpPost]
-        public HttpResponseMessage Register(User userdata)
+        public void Register(User userdata)
         {
 
             if (userdata.Password.Length > 5 && userdata.Password.Length <=20)
@@ -29,28 +32,37 @@ namespace WordChainGame.Controllers
                 }
                 else
                 {
-                    return new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest);
+                    throw new FormatException("User information is not in the correct format!");
                 }
             }
             else
             {
-                return new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest);
+                throw new FormatException("User information is not in the correct format!");
             }
-
-            return new HttpResponseMessage(System.Net.HttpStatusCode.Created);
         }
+
+        [HttpPost]
+        public Guid Session(LoginModel login)
+        {
+            var guid = userData.Login(login.Username, login.Password);
+            if (guid!= null)
+            {
+                return guid.Value;
+            }
+            throw new FormatException("User not exists");
+        }
+
         [HttpGet]
-        public HttpResponseMessage Get()
+        public IReadOnlyCollection<User> Get()
         {
             var us = userData.GetAllUsers();
-            return Request.CreateResponse(HttpStatusCode.OK, us);
+            return us;
         }
 
         [HttpDelete]
-        public HttpResponseMessage Delete(int id)
+        public void Delete(int id)
         {
             userData.DeleteUser(id);
-            return Request.CreateResponse(HttpStatusCode.NoContent, $"User with id {id} deleted!");
         }
         //change password with old and new password in request body
     }

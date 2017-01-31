@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,8 @@ namespace WordChain.Data.DataAccess
     public class UserDataManager : IUserDataManager
     {
         public static WordChainContext db = new WordChainContext();
+
+        public static ConcurrentDictionary<Guid, int> activeUsers = new ConcurrentDictionary<Guid, int>();
 
         public void ChangePassword(int id, string newPassword)
         {
@@ -37,6 +40,20 @@ namespace WordChain.Data.DataAccess
             return db.Users.FirstOrDefault(x => x.Id == id).IsAdmin;
         }
 
+        public Guid? Login(string username, string password)
+        {
+            var user = db.Users.FirstOrDefault(x => x.Username == username);
+           
+            if (user?.Password == password)
+            {
+                var guid = new Guid();
+                activeUsers.GetOrAdd(guid, user.Id);
+                return guid;
+            }
+            return null;
+
+        }
+
         public void RegisterUser(User newUser)
         {
             if (!db.Users.Any())
@@ -45,6 +62,11 @@ namespace WordChain.Data.DataAccess
             }
             db.Users.Add(newUser);
             db.SaveChanges();
+        }
+
+        public bool IsLogged(Guid auth)
+        {
+            return activeUsers.ContainsKey(auth);
         }
     }
 }
