@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordChainGame", "WordChainG
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordChain.Data", "WordChain.Data\WordChain.Data.csproj", "{123F36E0-2F5A-4538-83BF-1DB4901BD8C2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordChainGame.Tests", "WordChainGame.Tests\WordChainGame.Tests.csproj", "{04FF3028-C99F-499C-AC65-DA9E0B94E80B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{123F36E0-2F5A-4538-83BF-1DB4901BD8C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{123F36E0-2F5A-4538-83BF-1DB4901BD8C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{123F36E0-2F5A-4538-83BF-1DB4901BD8C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04FF3028-C99F-499C-AC65-DA9E0B94E80B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04FF3028-C99F-499C-AC65-DA9E0B94E80B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04FF3028-C99F-499C-AC65-DA9E0B94E80B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04FF3028-C99F-499C-AC65-DA9E0B94E80B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

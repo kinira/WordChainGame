@@ -10,7 +10,7 @@ namespace WordChain.Data.DataAccess
     public class GameManager : IGameManagers
     {
         public static WordChainContext db = new WordChainContext();
-        public void AddWord(string word, int topic)
+        public int AddWord(string word, int topic)
         {
             if (!db.BadWords.Any(x => x.Name == word))
             {
@@ -23,6 +23,9 @@ namespace WordChain.Data.DataAccess
                         w.Name = word;
                         w.TopicId = getId.Id;
                         //authorIdwillbeTakedAfterAuth
+                        db.Words.Add(w);
+                        db.SaveChanges();
+                        return w.Id;
                     }
                     else
                         throw new Exception("The same word already doesn't exists!");
@@ -43,12 +46,22 @@ namespace WordChain.Data.DataAccess
             db.SaveChanges();
         }
 
-        public int Create(Topic tp)
+        public int Create(string topicName)
         {
-            db.Topics.Add(tp);
-            db.SaveChanges();
-            var id = db.Topics.FirstOrDefault(x => x.Name == tp.Name);
-            return id.Id;
+            var topic = new Topic();
+            topic.Name = topicName;
+
+            if (!db.Topics.Contains(topic))
+            {
+                db.Topics.Add(topic);
+                db.SaveChanges();
+                return topic.Id;
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
+          
         }
 
         public void DeleteWord(int TopicId, int wordId)
@@ -101,5 +114,7 @@ namespace WordChain.Data.DataAccess
             db.Reports.Add(report);
 
         }
+
+      
     }
 }

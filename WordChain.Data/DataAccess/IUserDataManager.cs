@@ -14,9 +14,9 @@ namespace WordChain.Data.DataAccess
         User GetUserInformation(int id);
         void DeleteUser(int id);
 
-        void RegisterUser(User newUser);
+        User RegisterUser(User newUser);
 
-        void ChangePassword(int id, string newPassword);
+        void ChangePassword(int id,string oldPassword, string newPassword);
 
         IReadOnlyCollection<User> GetAllUsers();
         Guid? Login(string username, string password);

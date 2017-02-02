@@ -43,6 +43,12 @@ namespace WordChainGame
              routeTemplate: "api/report",
              defaults: new { controller = "report" }
          );
+
+            config.Routes.MapHttpRoute(
+            name: "Session",
+            routeTemplate: "api/Session",
+            defaults: new { controller = "Session" }
+        );
         }
     }
 }

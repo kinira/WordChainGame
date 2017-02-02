@@ -14,9 +14,18 @@ namespace WordChainGame.Controllers
         IUserDataManager userData = new UserDataManager();
         IGameManagers gameManager = new GameManager();
         [HttpGet]
-        public IEnumerable<Report> GetAllReports()
+        public IHttpActionResult GetAllReports()
         {
-            return gameManager.GetAllreportedWords();
+            try
+            {
+                var res = gameManager.GetAllreportedWords();
+                return Ok(res);
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+            
         }
 
     }

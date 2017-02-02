@@ -11,38 +11,80 @@ namespace WordChainGame.Controllers
 {
     public class TopicsController : ApiController
     {
-        IUserDataManager userData = new UserDataManager();
         IGameManagers gameManager = new GameManager();
 
         [HttpPost]
-       public int Create(Topic tp)
+       public IHttpActionResult Create([FromBody] string topicName)
         {
-          var id =  gameManager.Create(tp);
-            return id;
+            try
+            {
+                var id = gameManager.Create(topicName);
+                return Created("Topic",id);
+            }
+            catch (Exception)
+            {
+
+               return BadRequest();
+            }
+         
         }
 
         [HttpGet]
-        public IEnumerable<TopicView> GetAllTopics(int skip, int take, string orderBy)
+        public IHttpActionResult GetAllTopics(int skip, int take, string orderBy)
         {
-           return gameManager.GetAllTopics(skip, take, orderBy);
+            try
+            {
+                var res = gameManager.GetAllTopics(skip, take, orderBy);
+                return Ok(res);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpGet]
-        public IEnumerable<Word> GetAllWords(int name, int skip, int take)
+        public IHttpActionResult GetAllWords(int name, int skip, int take)
         {
-            return gameManager.GetAllWordsInTopic(name,skip,take);
+            try
+            {
+                var res = gameManager.GetAllWordsInTopic(name, skip, take);
+                return Ok(res);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+            
         }
 
         [HttpPost]
-        public void AddWordToTopic(int topic, string word)
+        public IHttpActionResult AddWordToTopic(int topic, string word)
         {
-            gameManager.AddWord(word, topic);
+            try
+            {
+                var id = gameManager.AddWord(word, topic);
+                return Created("Word",id);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+           
         }
 
         [HttpDelete]
-        public void DeleteWord(int name, int word)
+        public IHttpActionResult DeleteWord(int name, int word)
         {
-            gameManager.DeleteWord(name, word);
+            try
+            {
+                gameManager.DeleteWord(name, word);
+                return Ok("Deleted");
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
     }

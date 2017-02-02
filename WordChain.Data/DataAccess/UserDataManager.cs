@@ -12,12 +12,18 @@ namespace WordChain.Data.DataAccess
     {
         public static WordChainContext db = new WordChainContext();
 
-        public static ConcurrentDictionary<Guid, int> activeUsers = new ConcurrentDictionary<Guid, int>();
-
-        public void ChangePassword(int id, string newPassword)
+        public void ChangePassword(int id, string oldPassword, string newPassword)
         {
             var user = db.Users.FirstOrDefault(x => x.Id == id);
-            user.Password = newPassword;
+            if (user.Password == oldPassword)
+            {
+                user.Password = newPassword;
+                db.SaveChanges();
+            }
+            else
+            {
+                throw new FormatException();
+            }
         }
 
         public void DeleteUser(int id)
@@ -49,14 +55,13 @@ namespace WordChain.Data.DataAccess
             if (user?.Password == password)
             {
                 var guid = new Guid();
-                activeUsers.GetOrAdd(guid, user.Id);
                 return guid;
             }
             return null;
 
         }
 
-        public void RegisterUser(User newUser)
+        public User RegisterUser(User newUser)
         {
             if (!db.Users.Any())
             {
@@ -64,11 +69,13 @@ namespace WordChain.Data.DataAccess
             }
             db.Users.Add(newUser);
             db.SaveChanges();
+
+            return newUser;
         }
 
         public bool IsLogged(Guid auth)
         {
-            return activeUsers.ContainsKey(auth);
+            return false;
         }
     }
 }

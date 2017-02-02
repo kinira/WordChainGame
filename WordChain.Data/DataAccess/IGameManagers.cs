@@ -9,8 +9,8 @@ namespace WordChain.Data.DataAccess
 {
     public interface IGameManagers
     {
-        int Create(Topic tp);
-        void AddWord(string word, int topic);
+        int Create(string topicName);
+        int AddWord(string word, int topic);
         void ReportWord(string word, string topic);
         List<Report> GetAllreportedWords();
         void AddWordToBad(string badWord);
