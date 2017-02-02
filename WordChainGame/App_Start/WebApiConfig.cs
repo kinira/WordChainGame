@@ -31,6 +31,18 @@ namespace WordChainGame
               routeTemplate: "api/users/{id}",
               defaults: new { controller = "user", id = RouteParameter.Optional }
           );
+
+            config.Routes.MapHttpRoute(
+              name: "Topic",
+              routeTemplate: "api/topics/{name}/words",
+              defaults: new { controller = "Topic" }
+          );
+
+            config.Routes.MapHttpRoute(
+             name: "Report",
+             routeTemplate: "api/report",
+             defaults: new { controller = "report" }
+         );
         }
     }
 }

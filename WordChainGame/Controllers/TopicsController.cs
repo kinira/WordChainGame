@@ -22,9 +22,27 @@ namespace WordChainGame.Controllers
         }
 
         [HttpGet]
-        public List<Topic> GetAllTopics()
+        public IEnumerable<TopicView> GetAllTopics(int skip, int take, string orderBy)
         {
-            return null;
+           return gameManager.GetAllTopics(skip, take, orderBy);
+        }
+
+        [HttpGet]
+        public IEnumerable<Word> GetAllWords(int name, int skip, int take)
+        {
+            return gameManager.GetAllWordsInTopic(name,skip,take);
+        }
+
+        [HttpPost]
+        public void AddWordToTopic(int topic, string word)
+        {
+            gameManager.AddWord(word, topic);
+        }
+
+        [HttpDelete]
+        public void DeleteWord(int name, int word)
+        {
+            gameManager.DeleteWord(name, word);
         }
 
     }

@@ -22,7 +22,9 @@ namespace WordChain.Data.DataAccess
 
         public void DeleteUser(int id)
         {
-            var user = db.Users.Where(x => x.Id == id);
+            var user = db.Users.First(x => x.Id == id);
+            db.Users.Remove(user);
+            db.SaveChanges();
         }
 
         public IReadOnlyCollection<User> GetAllUsers()
