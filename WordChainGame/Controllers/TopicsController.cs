@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using WordChain.Data.DataAccess;
 using WordChain.Data.Models;
+using WordChainGame.Attributes;
 
 namespace WordChainGame.Controllers
 {
@@ -14,14 +15,15 @@ namespace WordChainGame.Controllers
         IGameManagers gameManager = new GameManager();
 
         [HttpPost]
-       public IHttpActionResult Create([FromBody] string topicName)
+        [TokenValidation]
+        public IHttpActionResult Create(Topic name)
         {
             try
             {
-                var id = gameManager.Create(topicName);
+                var id = gameManager.Create(name.Name);
                 return Created("Topic",id);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                return BadRequest();
@@ -30,6 +32,7 @@ namespace WordChainGame.Controllers
         }
 
         [HttpGet]
+        [TokenValidation]
         public IHttpActionResult GetAllTopics(int skip, int take, string orderBy)
         {
             try
@@ -37,13 +40,14 @@ namespace WordChainGame.Controllers
                 var res = gameManager.GetAllTopics(skip, take, orderBy);
                 return Ok(res);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return BadRequest();
             }
         }
 
         [HttpGet]
+        [TokenValidation]
         public IHttpActionResult GetAllWords(int name, int skip, int take)
         {
             try
@@ -51,7 +55,7 @@ namespace WordChainGame.Controllers
                 var res = gameManager.GetAllWordsInTopic(name, skip, take);
                 return Ok(res);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return BadRequest();
             }
@@ -59,14 +63,15 @@ namespace WordChainGame.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult AddWordToTopic(int topic, string word)
+        [TokenValidation]
+        public IHttpActionResult AddWordToTopic(int name, [FromBody] string word)
         {
             try
             {
-                var id = gameManager.AddWord(word, topic);
+                var id = gameManager.AddWord(word, name);
                 return Created("Word",id);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return BadRequest();
             }
@@ -74,6 +79,7 @@ namespace WordChainGame.Controllers
         }
 
         [HttpDelete]
+        [TokenValidation]
         public IHttpActionResult DeleteWord(int name, int word)
         {
             try
@@ -81,7 +87,7 @@ namespace WordChainGame.Controllers
                 gameManager.DeleteWord(name, word);
                 return Ok("Deleted");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return BadRequest();
             }

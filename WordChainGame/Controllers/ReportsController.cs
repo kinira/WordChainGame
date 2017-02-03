@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using WordChain.Data.DataAccess;
-using WordChain.Data.Models;
+using WordChainGame.Attributes;
 
 namespace WordChainGame.Controllers
 {
@@ -14,6 +10,7 @@ namespace WordChainGame.Controllers
         IUserDataManager userData = new UserDataManager();
         IGameManagers gameManager = new GameManager();
         [HttpGet]
+        [TokenValidation]
         public IHttpActionResult GetAllReports()
         {
             try

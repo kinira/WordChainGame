@@ -19,8 +19,5 @@ namespace WordChain.Data.DataAccess
         void ChangePassword(int id,string oldPassword, string newPassword);
 
         IReadOnlyCollection<User> GetAllUsers();
-        Guid? Login(string username, string password);
-
-        bool IsLogged(Guid auth);
     }
 }

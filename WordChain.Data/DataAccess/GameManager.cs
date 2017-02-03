@@ -10,6 +10,7 @@ namespace WordChain.Data.DataAccess
     public class GameManager : IGameManagers
     {
         public static WordChainContext db = new WordChainContext();
+        public Active activeUsers = Active.Instance;
         public int AddWord(string word, int topic)
         {
             if (!db.BadWords.Any(x => x.Name == word))
@@ -51,7 +52,7 @@ namespace WordChain.Data.DataAccess
             var topic = new Topic();
             topic.Name = topicName;
 
-            if (!db.Topics.Contains(topic))
+            if (!db.Topics.ToList().Contains(topic))
             {
                 db.Topics.Add(topic);
                 db.SaveChanges();

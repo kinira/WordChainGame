@@ -45,6 +45,7 @@ namespace WordChainGame.Controllers
         }       
 
         [HttpGet]
+        [TokenValidation]
         public IHttpActionResult Get()
         {
             var us = userData.GetAllUsers();
@@ -52,6 +53,7 @@ namespace WordChainGame.Controllers
         }
 
         [HttpDelete]
+        [TokenValidation]
         public IHttpActionResult Delete(int id)
         {
             try
@@ -66,6 +68,7 @@ namespace WordChainGame.Controllers
         }
 
         [HttpPut]
+        [TokenValidation]
         public IHttpActionResult ChangePassword(int userId, ChangePasswordBindingModel model)
         {
             try

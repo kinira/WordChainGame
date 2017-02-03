@@ -49,9 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccess\ActiveUsers.cs" />
     <Compile Include="DataAccess\GameManager.cs" />
     <Compile Include="DataAccess\IGameManagers.cs" />
+    <Compile Include="DataAccess\ILoginManager.cs" />
     <Compile Include="DataAccess\IUserDataManager.cs" />
+    <Compile Include="DataAccess\LoginManager.cs" />
     <Compile Include="DataAccess\UserDataManager.cs" />
     <Compile Include="Migrations\201701292030258_CreateDB.cs" />
     <Compile Include="Migrations\201701292030258_CreateDB.Designer.cs">

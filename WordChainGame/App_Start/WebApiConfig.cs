@@ -33,9 +33,15 @@ namespace WordChainGame
           );
 
             config.Routes.MapHttpRoute(
+  name: "AddWordToTopi",
+  routeTemplate: "api/topics/{name}/words/{word}",
+  defaults: new { controller = "Topic", name = RouteParameter.Optional, word = RouteParameter.Optional }
+);
+
+            config.Routes.MapHttpRoute(
               name: "Topic",
               routeTemplate: "api/topics/{name}/words",
-              defaults: new { controller = "Topic" }
+              defaults: new { controller = "Topic", name = RouteParameter.Optional }
           );
 
             config.Routes.MapHttpRoute(

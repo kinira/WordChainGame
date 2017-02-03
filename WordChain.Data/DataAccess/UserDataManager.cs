@@ -10,6 +10,7 @@ namespace WordChain.Data.DataAccess
 {
     public class UserDataManager : IUserDataManager
     {
+        public static ConcurrentDictionary<Guid, int> activeUsers = new ConcurrentDictionary<Guid, int>();
         public static WordChainContext db = new WordChainContext();
 
         public void ChangePassword(int id, string oldPassword, string newPassword)
@@ -47,19 +48,7 @@ namespace WordChain.Data.DataAccess
         {
             return db.Users.FirstOrDefault(x => x.Id == id).IsAdmin;
         }
-
-        public Guid? Login(string username, string password)
-        {
-            var user = db.Users.FirstOrDefault(x => x.Username == username);
-           
-            if (user?.Password == password)
-            {
-                var guid = new Guid();
-                return guid;
-            }
-            return null;
-
-        }
+      
 
         public User RegisterUser(User newUser)
         {
@@ -71,11 +60,6 @@ namespace WordChain.Data.DataAccess
             db.SaveChanges();
 
             return newUser;
-        }
-
-        public bool IsLogged(Guid auth)
-        {
-            return false;
         }
     }
 }

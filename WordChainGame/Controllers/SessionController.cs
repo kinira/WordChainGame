@@ -12,13 +12,12 @@ namespace WordChainGame.Controllers
 {
     public class SessionController : ApiController
     {
-        public IUserDataManager userData = new UserDataManager();
+        public ILoginManager loginManager = new LoginManager();
 
         [HttpPost]
-        [AuthorizeGuid]
         public IHttpActionResult Session(LoginModel login)
         {
-            var guid = userData.Login(login.Username, login.Password);
+            var guid = loginManager.Login(login.Username, login.Password);
             if (guid != null)
             {
                 return Ok(guid.Value);
@@ -26,7 +25,20 @@ namespace WordChainGame.Controllers
             return BadRequest();
         }
 
-        //logout delete from the dict
+        [HttpDelete]
+        [TokenValidation]
+        public IHttpActionResult Logout([FromBody] string token)
+        {
+            if (loginManager.Logout(new Guid(token)))
+            {
+                return Ok("Succsesful");
+            }
+            else
+            {
+                return BadRequest();
+            }
+            
+        }
 
     }
 }
